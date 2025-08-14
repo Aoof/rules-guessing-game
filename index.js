@@ -2,7 +2,7 @@ import express, { json, urlencoded } from 'express';
 import { readFileSync, writeFile, writeFileSync } from 'fs';
 
 const app = express();
-const port = 3001;
+const port = 3032;
 
 app.use(json({ extended: false }));
 app.use(urlencoded({ extended: true }));
@@ -52,6 +52,11 @@ app.get('/get-rule', (req, res) => {
         });
     }
 });
+
+app.get('/restart-taken', (req, res) => {
+    let { password } = req.params;
+    if (password == 'whippersnapper') writeFileSync('./data/taken.json', JSON.stringify({ taken: [] }));
+})
 
 app.listen(port, () => {
   console.log(`App listening at http://localhost:${port}`);
