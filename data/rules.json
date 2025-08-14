@@ -1,21 +1,89 @@
 {
   "rules": [
-    "Voice only: You must speak in a different accent/voice every time your name is called",
-    "Voice only: You must mimic whoever you choose, whether it be mockingly or straight up parroting",
-    "Voice only: You are suddenly monolingual. What's English?",
-    "Voice only: Did you just get braces? Your lisp is going crazy!",
-    "Voice only: You have to curse/swear in every sentence you speak.",
-    "Voice only: Love is in the air! You are now a big flirt!",
-    "Voice only: What's your name again? I can’t seem to remember",
-    "Voice only: You’re so confused! Everything you say seems to be a question",
-    "Voice only: You must repeat the last word you said in your sentence twice. Okay Ke$ha I see you!",
-    "Voice only: You are the proud owner of a Walkie Talkie! Begin each sentence with a “KSSH” and end it with an “OVER!”",
-    "Voice only: You must only refer to yourself in the third person",
-    "Voice only: You are now deaf/hard of hearing, poor you",
-    "In person: You are banned from making eye contact with anyone",
-    "In person: You are infatuated with the first person you looked at after reading this, you are not allowed to look at anybody else",
-    "In person: What happened to your fingers? Oh no! You are now wearing invisible boxing gloves, either ask for help, or struggle",
-    "Miscellaneous: You are now a Yes Man, “no” is not in your vocabulary",
-    "Miscellaneous: You have forgotten how to laugh normally, change up that giggle!"
+    {
+      "id": 1,
+      "text": "You must speak in a different accent/voice every time your name is called",
+      "tags": []
+    },
+    {
+      "id": 2,
+      "text": "You must mimic whoever you choose, whether it be mockingly or straight up parroting",
+      "tags": ["non-constant"]
+    },
+    {
+      "id": 3,
+      "text": "You are suddenly monolingual. What's English?",
+      "tags": []
+    },
+    {
+      "id": 4,
+      "text": "Did you just get braces? Your lisp is going crazy!",
+      "tags": []
+    },
+    {
+      "id": 5,
+      "text": "You have to curse/swear in every sentence you speak.",
+      "tags": []
+    },
+    {
+      "id": 6,
+      "text": "Love is in the air! You are now a big flirt!",
+      "tags": []
+    },
+    {
+      "id": 7,
+      "text": "What's your name again? I can't seem to remember",
+      "tags": []
+    },
+    {
+      "id": 8,
+      "text": "You're so confused! Everything you say seems to be a question",
+      "tags": []
+    },
+    {
+      "id": 9,
+      "text": "You must repeat the last word you said in your sentence twice. Okay Ke$ha I see you!",
+      "tags": []
+    },
+    {
+      "id": 10,
+      "text": "You are the proud owner of a Walkie Talkie! Begin each sentence with a “KSSH” and end it with an “OVER!”",
+      "tags": []
+    },
+    {
+      "id": 11,
+      "text": "You must only refer to yourself in the third person",
+      "tags": []
+    },
+    {
+      "id": 12,
+      "text": "You are now deaf/hard of hearing, poor you",
+      "tags": []
+    },
+    {
+      "id": 13,
+      "text": "You are banned from making eye contact with anyone",
+      "tags": []
+    },
+    {
+      "id": 14,
+      "text": "You are infatuated with the first person you looked at after reading this, you are not allowed to look at anybody else",
+      "tags": []
+    },
+    {
+      "id": 15,
+      "text": "What happened to your fingers? Oh no! You are now wearing invisible boxing gloves, either ask for help, or struggle",
+      "tags": []
+    },
+    {
+      "id": 16,
+      "text": "You are now a Yes Man, “no” is not in your vocabulary",
+      "tags": []
+    },
+    {
+      "id": 17,
+      "text": "You have forgotten how to laugh normally, change up that giggle!",
+      "tags": []
+    }
   ]
 }
