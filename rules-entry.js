@@ -25,7 +25,7 @@ rules.push(new Rule("You must speak in a different accent/voice every time your 
 rules.push(new Rule("You must mimic whoever you choose, whether it be mockingly or straight up parroting", ["in-person", "non-constant", "voice-only"]));
 
 rules.push(new Rule("You are suddenly monolingual. What's English?", ["in-person", "voice-only"]));
-rules[rules.length - 1].description = "You're not allowed to speak in English! Hope that helps!";
+rules[rules.length - 1].description = "You're not allowed to speak in English! Hope that helps! Reroll if that’s the only thing going for you I guess..";
 
 rules.push(new Rule("Did you just get braces? Your lisp is going crazy!", ["in-person", "voice-only"]));
 
