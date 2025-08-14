@@ -63,17 +63,48 @@
         #rerollBtn:hover {
             background: #5b21b6;
         }
+
+        .tag-select-container {
+            position: absolute;
+            top: -64px;
+            right: 0;
+            left: 0;
+            z-index: 200;
+            display: flex;
+            gap: 8px;
+            background: rgba(255,255,255,0.08);
+            border-radius: 12px;
+            padding: 10px 18px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+            align-items: center;
+        }
+        .tag-checkbox {
+            accent-color: #7c3aed;
+            margin-right: 4px;
+        }
+        .tag-label {
+            color: #fff;
+            font-size: 0.95rem;
+            font-weight: 500;
+            margin-right: 12px;
+            cursor: pointer;
+            user-select: none;
+        }
     </style>
 </head>
 <body>
-    <div class="text-center transition-all duration-300 ease-in-out scale-100" id="ruleContainer">
+    <div class="text-center transition-all duration-300 ease-in-out scale-100" id="ruleContainer" style="position:relative;">
+        <div class="tag-select-container" id="tagSelectContainer">
+            <label class="tag-label"><input type="checkbox" class="tag-checkbox" value="in-person">In-Person</label>
+            <label class="tag-label"><input type="checkbox" class="tag-checkbox" value="voice-only">Voice-Call</label>
+        </div>
         <h1 class="text-4xl font-bold text-white mb-4">Welcome to the Rule Guessing Game</h1>
         <h5 class="text-lg font-semibold text-white mb-8">Press the button below to get your rule</h5>
         <button class="bg-purple-600 text-white font-semibold py-2 px-4 text-xl rounded-xl shadow-xl cursor-pointer hover:bg-purple-700" id="getRuleBtn">
             Get Rule
         </button>
     </div>
-    <div class="relative flex" id="rerollContainer">
+    <div class="relative flex" id="rerollContainer" style="position:relative;">
         <button id="rerollBtn" style="display:none;">Reroll</button>
     </div>
 </body>
@@ -81,22 +112,32 @@
 <script>
     let ruleContainer = document.getElementById('ruleContainer');
     let rulePrompt = document.createElement('div');
+    let tagSelectContainer = document.getElementById('tagSelectContainer');
+    let rerollContainer = document.getElementById('rerollContainer');
     const rerollBtn = document.getElementById('rerollBtn');
 
     rulePrompt.className = 'text-lg font-semibold text-white mb-8 scale-0 transition-transform duration-300 ease-in-out hidden flex flex-col';
     rulePrompt.id = 'rulePrompt';
-    
+
+    function getSelectedTags() {
+        const checkboxes = tagSelectContainer.querySelectorAll('input[type="checkbox"]:checked');
+        return Array.from(checkboxes).map(cb => cb.value);
+    }
+
     document.getElementById('rerollContainer').insertBefore(rulePrompt, rerollBtn);
     async function fetchRule() {
         let response = "Loading rule...";
         try {
-            const res = await fetch('/get-rule');
+            let selectedTags = getSelectedTags();
+
+            const res = await fetch('/get-rule?tags=' + selectedTags.join(','));
             const data = await res.json();
 
             if (!data.success) {
                 throw new Error(data.content || 'Failed to fetch rule');
             }
             const mainDiv = document.createElement('div');
+            mainDiv.className = 'flex flex-col gap-2';
             mainDiv.textContent = data.content.text;
 
             const footerDiv = document.createElement('div');
@@ -105,21 +146,38 @@
             }
 
             const infoDiv = document.createElement('div');
-            infoDiv.className = 'text-white/70 text-xs hidden md:block';
+            infoDiv.className = 'text-white/70 text-xs flex flex-col items-left gap-2';
 
             const constSpan = document.createElement('span');
             constSpan.className = 'mr-4';
-            constSpan.textContent = 'Not Constant: Can be paused if needed';
+            constSpan.textContent = 'Situational: Whenever you think is right (but don\'t overdo it we\'re cutting you some slack)';
 
             const inPersonSpan = document.createElement('span');
-            inPersonSpan.textContent = 'In-Person: Requires physical presence';
+            inPersonSpan.textContent = 'In-Person: You may use this rule in a physical setting';
+
+            const voiceSpan = document.createElement('span');
+            voiceSpan.textContent = 'Voice-Call: You may use this rule in a voice chat';
+
+            const descSpan = document.createElement('span');
+            descSpan.className = 'my-2 w-full text-left text-xs text-white/70';
+            descSpan.textContent = data.content.description;
+
+            if (data.content.description != "") {
+                mainDiv.appendChild(descSpan);
+            }
 
             if (data.content.tags.includes('non-constant')) {
                 infoDiv.appendChild(constSpan);
             }
+
             if (data.content.tags.includes('in-person')) {
                 infoDiv.appendChild(inPersonSpan);
             }
+
+            if (data.content.tags.includes('voice-only')) {
+                infoDiv.appendChild(voiceSpan);
+            }
+
             footerDiv.appendChild(infoDiv);
 
             rulePrompt.innerHTML = '';
@@ -137,6 +195,7 @@
             rulePrompt.classList.remove('hidden');
             rulePrompt.classList.add('scale-100');
             rerollBtn.style.display = 'block';
+            rerollContainer.insertBefore(tagSelectContainer, rerollBtn);
         }, 300);
     }
 

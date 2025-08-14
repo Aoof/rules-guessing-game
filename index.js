@@ -27,7 +27,21 @@ app.get('/', (req, res) => {
 });
 
 app.get('/get-rule', (req, res) => {
-    const randomRuleId = availableRules[Math.floor(Math.random() * availableRules.length)].id;
+    let { tags } = req.query;
+
+    tags = tags ? tags.split(',') : [];
+    tags = tags.filter(tag => tag != "non-constant");
+
+    const filteredRules = availableRules.filter(rule => {
+        if (!tags || tags.length === 0) return true;
+        return tags.every(tag => rule.tags.includes(tag));
+    });
+
+    if (filteredRules.length === 0) {
+        return res.send({ success: false, content: 'No matching rules found' });
+    }
+
+    const randomRuleId = filteredRules[Math.floor(Math.random() * filteredRules.length)].id;
     res.send({success: true, content: getRuleById(randomRuleId)});
 });
 
